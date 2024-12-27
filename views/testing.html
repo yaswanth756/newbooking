@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajay Residency</title>
+    <style>
+        .notification-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-width: 300px;
+            animation: slideIn 0.5s ease-out;
+            display: none;
+        }
+
+        .notification-box.show {
+            display: block;
+        }
+
+        .notification-box.hide {
+            animation: fadeOut 0.5s ease-in forwards;
+        }
+
+        .notification-box h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .notification-box .close-notification {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 5px;
+        }
+
+        .notification-box p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .notification-box .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Improved notification box with loading state and close button -->
+    <div class="notification-box" id="aiGreeting">
+        <h4>
+            Welcome back! 👋
+            <button class="close-notification" onclick="hideGreeting()">&times;</button>
+        </h4>
+        <p id="greetingText">
+            <span class="loading"></span>
+            <span>Loading your personalized greeting...</span>
+        </p>
+    </div>
+
+    <!-- Rest of your existing HTML -->
+
+    <script>
+        let greetingTimeout;
+
+        function showGreeting(username) {
+            if (!username) return;
+            
+            const greetingBox = document.getElementById('aiGreeting');
+            const greetingText = document.getElementById('greetingText');
+            
+            // Show the notification with loading state
+            greetingBox.classList.remove('hide');
+            greetingBox.classList.add('show');
+            
+            // Fetch greeting from backend
+            fetch(`/ai/greeting/${encodeURIComponent(username)}`)
+                .then(response => {
+                
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    greetingText.innerHTML = data.greeting;
+                    
+                    // Set timeout for auto-hide
+                    greetingTimeout = setTimeout(() => {
+                        hideGreeting();
+                    }, 9500);
+                })
+                .catch(error => {
+                    console.error('Error fetching greeting:', error);
+                    greetingText.innerHTML = `Welcome back, ${username}! We're glad to see you.`;
+                });
+        }
+
+        function hideGreeting() {
+            const greetingBox = document.getElementById('aiGreeting');
+            clearTimeout(greetingTimeout);
+            
+            greetingBox.classList.add('hide');
+            setTimeout(() => {
+                greetingBox.classList.remove('show', 'hide');
+            }, 500);
+        }
+        showGreeting('yaswanth');
+    </script>
+</body>
+</html>

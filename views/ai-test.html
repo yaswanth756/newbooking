@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hotel Booking - Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(120deg, #ffcccb, #d1c4e9);
+        }
+
+        #ai-content {
+            background-color: rgb(209, 202, 202);
+            width: 80%;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #scrolling-message {
+            display: flex;
+            white-space: nowrap;
+            animation: scrollLeft 20s linear infinite;
+            font-size: 1.5em;
+        }
+
+        .typing {
+            display: inline-block;
+            padding: 0;
+            border-right: 3px solid #333;
+            animation: typing 4s steps(40) 1s forwards, blinkCaret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blinkCaret {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        @keyframes scrollLeft {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ai-content">
+        <div id="scrolling-message">
+            <div class="typing" id="typingMessage">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        function fetchAIContent() {
+            fetch('/ai/get-message')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('typingMessage').textContent = data.message;
+                    document.getElementById('typingMessage').classList.add('typing');
+                })
+                .catch(error => console.log('Error:', error));
+        }
+
+        // Fetch the AI response when the page loads
+        window.onload = fetchAIContent;
+    </script>
+
+</body>
+</html>

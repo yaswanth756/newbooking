@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+}
+
+/* Main Content */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.booking-summary h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.booking-summary h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: #3498db;
+    border-radius: 2px;
+}
+
+/* Booking Card */
+.booking-container {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.booking-container:hover {
+    transform: translateY(-5px);
+}
+
+.booking-info {
+    flex: 1;
+}
+
+.booking-info p {
+    margin: 0.7rem 0;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.booking-info strong {
+    color: #2c3e50;
+    min-width: 140px;
+    display: inline-block;
+}
+
+/* Total Amount Card */
+.total-amount-card {
+    background: white;
+    margin-top: 80px;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.total-amount-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.amount-details {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.amount-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.amount-row:last-child {
+    border-bottom: none;
+    font-weight: bold;
+}
+
+/* Media */
+.booking-media {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.booking-image img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.delete-button {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.delete-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* Modal */
+.modal {
+            display: none;  /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);  /* Black background with opacity */
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .modal-body {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .modal-footer {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .btn-close {
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+/* Footer */
+footer {
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    .total-amount-card {
+        position: static;
+        margin-bottom: 2rem;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .booking-info strong {
+        display: block;
+        margin-bottom: 0.3rem;
+    }
+
+    .booking-media {
+        width: 100%;
+    }
+
+    .booking-image img {
+        width: 100%;
+        max-width: 300px;
+        height: 200px;
+    }
+
+    nav {
+        display: block;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    nav a {
+        display: block;
+        margin: 0.5rem 0;
+        text-align: left;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Your Bookings</h1>
+            <nav>
+                <a href="/"><i class="fas fa-home"></i> Home</a>
+                <a href="/rooms"><i class="fas fa-bed"></i> Rooms</a>
+                <a href="/login" onclick="local()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="booking-summary">
+            <h2>Booking Summary</h2>
+            <div id="bookings-container"></div>
+        </section>
+        <section class="total-amount-card">
+            <h3>Total Amount</h3>
+            <div class="amount-details">
+                <div id="amount-breakdown"></div>
+            </div>
+            <button class="btn btn-primary" onclick="proceedToPayment()">
+                <i class="fas fa-credit-card"></i> Proceed to Payment
+            </button>
+        </section>
+    </main>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Important Information</h3>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage">You need to proceed with payment to complete your booking.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-close" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Ajay Residency. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const userData = localStorage.getItem("user");
+const user = JSON.parse(userData);
+
+function render() {
+    fetch(`/user/booking/payment/${user.id}`)
+        .then(response => response.json())
+        .then(data => {
+            const bookingsContainer = document.getElementById("bookings-container");
+            const amountBreakdown = document.getElementById("amount-breakdown");
+            
+            if (data.message === "No booking found for this user.") {
+                renderEmptyState(bookingsContainer, amountBreakdown);
+            } else {
+                renderBookings(data.booking, bookingsContainer, amountBreakdown);
+            }
+        })
+        .catch(err => {
+            console.error('Error fetching booking data:', err);
+        });
+}
+
+function renderEmptyState(bookingsContainer, amountBreakdown) {
+    bookingsContainer.innerHTML = `
+        <div style="text-align: center; padding: 2rem;">
+            <i class="fas fa-calendar-times" style="font-size: 3rem; color: #95a5a6; margin-bottom: 1rem;"></i>
+            <p style="font-size: 1.2rem; color: #7f8c8d;">No bookings available.</p>
+        </div>
+    `;
+    amountBreakdown.innerHTML = `
+        <div class="amount-row">
+            <span>No bookings</span>
+            <span>₹0</span>
+        </div>
+    `;
+}
+
+function renderBookings(bookings, bookingsContainer, amountBreakdown) {
+    bookingsContainer.innerHTML = '';
+    let totalAmount = 0;
+    let amountHTML = '';
+    let pendingPayments = false;  // Track if there are any pending payments
+
+    bookings.forEach((booking, index) => {
+        const formattedCheckIn = new Date(booking.check_in).toLocaleDateString();
+        const formattedCheckOut = new Date(booking.check_out).toLocaleDateString();
+
+        // Only calculate costs for pending payments
+        if (booking.payment !== 'Payment done') {
+            let roomCost = 200 * booking.num_guests + booking.total_price;
+            totalAmount += roomCost;
+            pendingPayments = true;
+
+            amountHTML += `
+                <div class="amount-row">
+                    <span>Room ${index + 1} (${booking.room_type})</span>
+                    <span>₹${roomCost}</span>
+                </div>
+            `;
+        }
+
+        const bookingHTML = `
+            <div class="booking-container" id="booking-${booking.id}">
+                <div class="booking-info">
+                    <p><strong>Room Type:</strong> ${booking.room_type}</p>
+                    <p><strong>Check-In:</strong> ${formattedCheckIn}</p>
+                    <p><strong>Check-Out:</strong> ${formattedCheckOut}</p>
+                    <p><strong>Guests:</strong> ${booking.num_guests}</p>
+                    <p><strong>Status:</strong> 
+                        <span style="color: ${booking.payment === 'Pending' ? '#e74c3c' : '#27ae60'}">
+                            ${booking.payment}
+                        </span>
+                    </p>
+                    <button class="delete-button" onclick="del('${booking.room_id}')">
+                        <i class="fas fa-trash"></i> Cancel Booking
+                    </button>
+                </div>
+                <div class="booking-media">
+                    <div class="booking-image">
+                        <img src="/images/${booking.room_type}.jpeg" alt="${booking.room_type}">
+                    </div>
+                    <div class="booking-description">
+                        <p id="description-${booking.room_id}">loading....</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        bookingsContainer.innerHTML += bookingHTML;
+        des(booking.room_id);
+    });
+
+    // Only show amount breakdown if there are pending payments
+    if (!pendingPayments) {
+        amountBreakdown.innerHTML = `
+            <div class="amount-row">
+                <span>No pending payments</span>
+                <span>₹0</span>
+            </div>
+        `;
+    } else {
+        const tax = totalAmount * 0.18; // 18% tax
+        amountHTML += `
+            <div class="amount-row">
+                <span>Tax (18%)</span>
+                <span>₹${tax.toFixed(2)}</span>
+            </div>
+            <div class="amount-row">
+                <span>Total Amount</span>
+                <span>₹${(totalAmount + tax).toFixed(2)}</span>
+            </div>
+        `;
+        amountBreakdown.innerHTML = amountHTML;
+    }
+}
+
+    // Add tax and total to amount breakdown
+    
+function proceedToPayment() {
+    fetch(`/payment/${user.id}`, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                showModal(data.message);
+            }
+        })
+        .catch(err => {
+            console.error("Error during payment processing:", err);
+            alert("There was an issue processing your payment. Please try again later.");
+        });
+}
+function del(room_id) {
+    if (!confirm("Are you sure you want to delete this booking?")) {
+        return;
+    }
+
+    fetch("/booking/delete", {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            room_id: room_id,
+            user_id: user.id
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.message) {
+            showModal(data.message);
+            render();  // Re-render the booking list after deletion
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting booking:', error);
+        alert("Failed to delete booking. Please try again.");
+    });
+}
+
+function showModal(message) {
+            document.getElementById("modalMessage").innerText = message;
+            document.getElementById("infoModal").style.display = "block";
+        }
+
+        // Close the modal
+function closeModal() {
+            document.getElementById("infoModal").style.display = "none";
+            location.reload();
+           
+        }
+
+function goBack() {
+            window.location.href = '/';
+        }
+function des(room_id) {
+    fetch(`/description/${room_id}`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch room description');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            const descriptionElement = document.getElementById(`description-${room_id}`);
+            descriptionElement.innerText = data.description;
+        })
+        .catch((error) => {
+            console.error('Error fetching room description:', error);
+            const descriptionElement = document.getElementById(`description-${room_id}`);
+            descriptionElement.innerText = 'Description not available.';
+        });
+}
+
+function local() {
+    localStorage.removeItem('user');  // Remove user data from local storage
+    window.location.href = '/login';  // Redirect to login page
+}
+
+// Initialize render on page load
+render();
+    </script>
+</body>
+</html>

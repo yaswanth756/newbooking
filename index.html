@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <!-- 1. Header -->
+    
+<div class="overlay" id="overlay"></div>
+<header class="header">
+    <button class="nav-toggle" id="navToggle">☰</button>
+    <div class="logo">Ajay Residency</div>
+    <nav class="nav-links" id="navLinks">
+        <button class="close-btn" id="closeBtn">×</button>
+        <a href="#home">Home</a>
+        <a href="/room-gallery">Rooms-Gallery</a>
+        <a href="#booking">Book Now</a>
+        <a href="/feedback">Reviews</a>
+        <a href="/Payment">Payment</a>
+    </nav>
+    <div class="profile-section">
+        <img src="images/download (1).png" alt="Profile" class="profile-img">
+        <button class="dropdown-toggle" id="dropdownToggle">Login now</button>
+        <ul class="dropdown-menu" id="dropdownMenu">
+            <li><a href="/profile">View Profile</a></li>
+            <li><a href="/maintenance">Settings</a></li>
+            <li><a href="/login" onclick="local()">Logout</a></li>
+        </ul>
+    </div>
+</header>
+<div class="notification-box" id="aiGreeting">
+    <h4>
+        Welcome back! 👋
+        <button class="close-notification" onclick="hideGreeting()">&times;</button>
+    </h4>
+    <p id="greetingText">
+        <span class="loading"></span>
+        <span>Loading your personalized greeting...</span>
+    </p>
+</div>
+
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Welcome to Ajay Residency</h2>
+            <p>Experience unparalleled luxury and comfort in the heart of the city.</p>
+            <p>Whether you're here for business or leisure, our modern amenities and exceptional service promise to make your stay unforgettable.</p>
+            <a href="#booking" class="btn-1 btn-primary">Book Your Stay</a>
+        </div>
+    </section>
+    <section class="rooms" id="rooms">
+        <h2 class="section-title">Our Rooms</h2>
+        <div class="rooms-grid">
+            <!-- Standard Room -->
+            <div class="room-card">
+                <div class="room-image"><img src="images/pexels-pixabay-271624.jpg" alt="" width="380px" height="220px"></div>
+                <div class="room-info">
+                    <h3 class="room-type">Standard Room</h3>
+                    <div class="room-price">₹1,000/night</div>
+                    <p>Comfortable room with essential amenities</p>
+                    <div class="room-features">
+                        <span class="feature"><i class="fas fa-bed"></i> Queen Bed</span>
+                        <span class="feature"><i class="fas fa-wifi"></i> Free WiFi</span>
+                        <span class="feature"><i class="fas fa-tv"></i> LED TV</span>
+                    </div>
+                    <a href="#booking"><button class="btn btn-primary-1" >Book Now</button></a>
+                </div>
+            </div>
+
+            <!-- Deluxe Suite -->
+            <div class="room-card">
+                <div class="room-image"><img src="images/pexels-photo-27604116d.webp" alt="" width="380px" height="220px"></div>
+                <div class="room-info">
+                    <h3 class="room-type">Deluxe Suite</h3>
+                    <div class="room-price">₹2,500/night</div>
+                    <p>Spacious suite with premium amenities</p>
+                    <div class="room-features">
+                        <span class="feature"><i class="fas fa-bed"></i> King Bed</span>
+                        <span class="feature"><i class="fas fa-couch"></i> Seating Area</span>
+                        <span class="feature"><i class="fas fa-coffee"></i> Mini Kitchen</span>
+                    </div>
+                    <a href="#booking"><button class="btn btn-primary-1" >Book Now</button></a>
+                </div>
+            </div>
+
+            <!-- Family Room -->
+            <div class="room-card">
+                <div class="room-image"><img src="images/free-photo-of-modern-living-room-interior.jpeg" alt="" width="380px" height="220px"></div>
+                <div class="room-info">
+                    <h3 class="room-type">Family Room</h3>
+                    <div class="room-price">₹3,500/night</div>
+                    <p>Perfect for families with extra space</p>
+                    <div class="room-features">
+                        <span class="feature"><i class="fas fa-bed"></i> 2 Queen Beds</span>
+                        <span class="feature"><i class="fas fa-users"></i> Up to 4 Guests</span>
+                        <span class="feature"><i class="fas fa-bath"></i> Bathtub</span>
+                    </div>
+                    <a href="#booking"><button class="btn btn-primary-1" >Book Now</button></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="booking" id="booking">
+        <h2 class="section-title">Book Your Stay</h2>
+        <p class="section-description">
+            Choose your check-in and check-out dates, room type, and the number of guests to ensure a seamless booking experience.
+        </p>
+        <form class="booking-form">
+            <div class="form-grid">
+                <!-- Check-in Date -->
+                <div class="form-group">
+                    <label for="check-in">
+                        <i class="fas fa-calendar-day"></i> Check-in Date
+                    </label>
+                    <input type="date" id="check-in" required>
+                </div>
+    
+                <!-- Check-out Date -->
+                <div class="form-group">
+                    <label for="check-out">
+                        <i class="fas fa-calendar-day"></i> Check-out Date
+                    </label>
+                    <input type="date" id="check-out" required>
+                </div>
+    
+                <!-- Room Type -->
+                <div class="form-group">
+                    <label for="room-type">
+                        <i class="fas fa-bed"></i> Room Type
+                    </label>
+                    <select id="room-type" required>
+                        <option value="">Select Room</option>
+                        <option value="standard">Standard</option>
+                        <option value="deluxe">Deluxe</option>
+                        <option value="family">Family</option>
+                    </select>
+                </div>
+    
+                <!-- Number of Guests -->
+                <div class="form-group">
+                    <label for="guests">
+                        <i class="fas fa-user-friends"></i> Number of Guests
+                    </label>
+                    <select id="guests" required>
+                        <option value="1">1 Guest</option>
+                        <option value="2">2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary-2">
+                <i class="fas fa-check-circle"></i> Confirm Booking
+            </button>
+        </form>
+    </section>
+    <section class="reviews" id="reviews">
+        <h2 class="section-title">Guest Reviews</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"Excellent service and very comfortable rooms. The staff was very helpful and friendly."</p>
+                <p class="reviewer">- Jaswanth T.</p>
+            </div>
+            <div class="review-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"Perfect location and amazing amenities. Will definitely come back!"</p>
+                <p class="reviewer">- Charan C.</p>
+            </div>
+            <div class="review-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"Great value for money. Clean rooms and excellent service."</p>
+                <p class="reviewer">- Mohith O.</p>
+            </div>
+        </div>
+        <div class="reviews-more">
+            <a href="/feedback" class="see-more-link">See More &gt;&gt;</a>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> +91 7569878084</p>
+                <p><i class="fas fa-envelope"></i> vyaswanthraju18@.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> 516269, Rayachoty, Madanapalle Road</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#rooms">Our Rooms</a></p>
+                <p><a href="#booking">Book Now</a></p>
+                <p><a href="#reviews">Reviews</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Ajay Residency. All rights reserved.</p>
+        </div>
+    </footer>
+    <div id="background-light" class="overlay">
+        <div class="login-prompt">
+            <p class="main-text">✨ Hey there! It seems you're not logged in yet. 😊</p>
+            <p class="sub-text">Log in to unlock amazing features, personalized recommendations, and an extraordinary experience! 💖🔑</p>
+            <button id="doneButton" class="btn-primary">🔐 Log In Now</button>
+        </div>
+    </div>
+   <script src="booking.js"></script>
+</body>
+</html>

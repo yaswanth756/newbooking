@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .panels-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .panel {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .panel-title {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .search-container {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 4px;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        input, select, button {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 8px 16px;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        button.delete {
+            background: #ff4444;
+        }
+
+        button.delete:hover {
+            background: #cc0000;
+        }
+
+        .add-room-btn {
+            background: #2196F3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            color: #555;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+        }
+
+        @media (max-width: 768px) {
+            .panels-container {
+                flex-direction: column;
+            }
+            
+            .panel {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="panels-container">
+        <!-- Rooms Panel -->
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">Rooms</h2>
+                <button class="add-room-btn" onclick="showAddRoomModal()">Add New Room</button>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-container">
+                <form class="search-form" onsubmit="searchRooms(event)">
+                    <div class="form-group">
+                        <label for="roomNumber">Room Number</label>
+                        <input type="text" id="roomNumber" placeholder="Search by room number">
+                    </div>
+                    <div class="form-group">
+                        <label for="roomType">Room Type</label>
+                        <select id="roomType">
+                            <option value="">All Types</option>
+                            <option value="Single">Single</option>
+                            <option value="Double">Double</option>
+                            <option value="Suite">Suite</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="">All Status</option>
+                            <option value="Available">Available</option>
+                            <option value="Occupied">Occupied</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Room No</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="roomsTableBody">
+                    <!-- Dynamic rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Room Modal -->
+    <div id="addRoomModal" class="modal">
+        <div class="modal-content">
+            <h2>Add New Room</h2>
+            <form onsubmit="addRoom(event)" class="search-form">
+                <div class="form-group">
+                    <label for="newRoomNumber">Room Number</label>
+                    <input type="text" id="newRoomNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="newRoomType">Room Type</label>
+                    <select id="newRoomType" required>
+                        <option value="Single">Single</option>
+                        <option value="Double">Double</option>
+                        <option value="Suite">Suite</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Add Room</button>
+                    <button type="button" onclick="hideAddRoomModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        async function loadRooms() {
+    try {
+        const response = await fetch('/adminpanel/rooms');  // Fetch room data from the backend
+        const rooms = await response.json();  // Parse the JSON response
+        
+        const tableBody = document.getElementById('roomsTableBody');
+        tableBody.innerHTML = '';  // Clear existing rows
+
+        // Populate the table with room data
+        rooms.forEach(room => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${room.room_id}</td>
+                <td>${room.room_type}</td>
+                <td>${room.availability}</td>
+                <td>${room.price}</td>
+                <td><button onclick="deleteRoom(${room.room_id})">Delete</button></td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching rooms:', error);
+    }
+}
+loadRooms();
+
+
+
+        function searchRooms(event) {
+            event.preventDefault();
+            // Implement room search logic here
+            alert('Search functionality would filter rooms based on criteria');
+        }
+
+        function showAddRoomModal() {
+            document.getElementById('addRoomModal').style.display = 'block';
+        }
+
+        function hideAddRoomModal() {
+            document.getElementById('addRoomModal').style.display = 'none';
+        }
+
+        function addRoom(event) {
+            event.preventDefault();
+            // Implement add room logic here
+            alert('New room would be added to the system');
+            hideAddRoomModal();
+        }
+
+        function deleteRoom(roomNumber) {
+            if (confirm(`Are you sure you want to delete room ${roomNumber}?`)) {
+                alert(`Room ${roomNumber} would be deleted`);
+            }
+        }
+
+        fetch('/manage/rooms')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response from /manage/rooms:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    </script>
+</body>
+</html>
