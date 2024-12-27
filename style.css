@@ -908,7 +908,7 @@ font-size: 0.9rem;
 @media (max-width: 450px) {
     .notification-box {
         top: 90px; /* Adjust top spacing for smaller screens */
-        right: 0; /* Align to the right edge */
+        right: 5%; /* Align to the right edge */
         width: 90%; /* Slightly reduce width for better fit */
         margin: 0 auto; /* Center-align the box */
         padding: 10px 15px; /* Comfortable padding */
