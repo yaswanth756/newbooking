@@ -871,10 +871,16 @@ font-size: 0.9rem;
     }
 
     .nav-links {
-        flex: 2; /* Give links more space */
-        display: flex;
-        justify-content: center; /* Center links horizontally */
-        gap: 10px; /* Add spacing between links */
+         position: fixed;
+        left: -280px;
+        top: 0;
+        bottom: 0;
+        width: 280px;
+        background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+        flex-direction: column;
+        padding: 60px 0 0;
+        transition: 0.3s ease;
+        z-index: 1001;/* Add spacing between links */
     }
 
     .nav-links a {
