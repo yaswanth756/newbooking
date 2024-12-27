@@ -858,4 +858,67 @@ font-size: 0.9rem;
         opacity: 0;
     }
 }
+@media (max-width: 450px) {
+    .header {
+        flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+    }
+
+    .logo {
+        flex: 1; /* Allow logo to take up available space */
+        text-align: center;
+        font-size: 1.2rem;
+        margin-right: 10px;
+    }
+
+    .nav-links {
+        flex: 2; /* Give links more space */
+        display: flex;
+        justify-content: center; /* Center links horizontally */
+        gap: 10px; /* Add spacing between links */
+    }
+
+    .nav-links a {
+        font-size: 0.9rem; /* Adjust font size for smaller screens */
+        padding: 5px 10px;
+    }
+
+    .profile-section {
+        flex: 1; /* Allow profile section to adjust within layout */
+        display: flex;
+        justify-content: flex-end; /* Push to the right side */
+        align-items: center;
+    }
+
+    .profile-img {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+
+    .dropdown-toggle {
+        font-size: 0.8rem;
+    }
+}
+@media (max-width: 450px) {
+    .notification-box {
+        top: 90px; /* Adjust top spacing for smaller screens */
+        right: 0; /* Align to the right edge */
+        width: 90%; /* Slightly reduce width for better fit */
+        margin: 0 auto; /* Center-align the box */
+        padding: 10px 15px; /* Comfortable padding */
+    }
+
+    .notification-box h4 {
+        font-size: 14px; /* Slightly larger font for readability */
+    }
+
+    .notification-box p {
+        font-size: 12px; /* Maintain readability for paragraphs */
+    }
+
+    .notification-box .close-notification {
+        font-size: 16px; /* Larger close button for accessibility */
+    }
+}
+
 
